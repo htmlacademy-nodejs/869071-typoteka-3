@@ -1,0 +1,26 @@
+{
+  "name": "typoteka",
+  "version": "1.0.0",
+  "description": "Типотека",
+  "main": "./src/service/service.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "7.3.1",
+    "eslint-config-htmlacademy": "0.5.2"
+  },
+  "scripts": {
+    "start": "node ./src/service/service.js",
+    "test": "npm run eslint",
+    "eslint": "eslint --ext .js src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vmejazz/869071-typoteka-3.git"
+  },
+  "author": "Vladimir Vasilevich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vmejazz/869071-typoteka-3/issues"
+  },
+  "homepage": "https://github.com/vmejazz/869071-typoteka-3#readme"
+}
