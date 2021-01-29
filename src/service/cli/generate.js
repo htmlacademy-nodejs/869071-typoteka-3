@@ -81,7 +81,7 @@ const getPostDate = () => {
   let dateNow = new Date();
   let backDays = getRandomInt(0, BACK_DAYS_MAX);
   let datePost = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate() - backDays);
-  let datePostString = `${datePost.getFullYear()}-${datePost.getMonth() + 1}-${datePost.getUTCDate()} ${dateNow.toLocaleTimeString([], {hour12: false})}`;
+  let datePostString = `${datePost.getFullYear()}-${datePost.getMonth() + 1}-${datePost.getUTCDate()} ${dateNow.toLocaleTimeString([], {hour12: false, hour: `2-digit`, minute: `2-digit`, second: `2-digit`})}`;
 
   return datePostString;
 };
@@ -105,7 +105,12 @@ module.exports = {
     const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
 
     if (countOffer > MAX_OFFERS) {
-      console.log(chalk.red(`Не больше 1000 объявлений`));
+      console.error(chalk.red(`Не больше 1000 объявлений`));
+      return;
+    }
+
+    if (countOffer < 0) {
+      console.error(chalk.red(`Отрицательные значения не допустимы`));
       return;
     }
 
