@@ -58,9 +58,8 @@ const readFileFromDisk = async (path) => {
     content.pop();
     return content;
   } catch (err) {
-    console.error(chalk.red(`Ошибка чтения из файла: ${err}`));
+    throw err;
   }
-  return [];
 };
 
 module.exports = {
@@ -71,25 +70,36 @@ module.exports = {
 
     if (countOffer > MAX_OFFERS) {
       console.error(chalk.red(`Не больше 1000 объявлений`));
-      return;
+      process.exit(1);
     }
 
     if (countOffer <= 0) {
       console.error(chalk.red(`Отрицательные значения не допустимы`));
-      return;
+      process.exit(1);
     }
 
-    const titles = await readFileFromDisk(FILE_PATH_TITLES);
-    const categories = await readFileFromDisk(FILE_PATH_CATEGORIES);
-    const sentences = await readFileFromDisk(FILE_PATH_SENTENCES);
+    // Пробуем прочитать данные и сформировать контент
+    let content;
+    try {
+      const titles = await readFileFromDisk(FILE_PATH_TITLES);
+      const categories = await readFileFromDisk(FILE_PATH_CATEGORIES);
+      const sentences = await readFileFromDisk(FILE_PATH_SENTENCES);
+      content = JSON.stringify(generatePosts(countOffer, titles, categories, sentences));
+    } catch (err) {
+      console.error(chalk.red(`Произошли ошибки при чтении шаблонных файлов: ${err} \nБудет произведен выход из программы `));
+      process.exit(1);
+    }
 
-    const content = JSON.stringify(generatePosts(countOffer, titles, categories, sentences));
-
+    // Пробуем записать данные, если они есть
     try {
       await fs.writeFile(FILE_NAME, content);
       console.info(chalk.green(`Operation success. File created`));
     } catch (err) {
       console.error(chalk.red(`Can't write data to file...Because: ${err}`));
+      process.exit(1);
     }
+
+    // Отработало корректно, успешный выход
+    process.exit(0);
   }
 };
