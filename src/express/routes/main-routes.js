@@ -5,10 +5,10 @@ const mainRoutes = new Router();
 
 // Определяем `GET` маршруты.
 // основной путь маршрута /
-mainRoutes.get(`/`, (req, res) => res.send(`/`));
-mainRoutes.get(`/register`, (req, res) => res.send(`/register`));
-mainRoutes.get(`/login`, (req, res) => res.send(`/login`));
-mainRoutes.get(`/search`, (req, res) => res.send(`/search`));
-mainRoutes.get(`/categories`, (req, res) => res.send(`/categories`));
+mainRoutes.get(`/`, (req, res) => res.render(`main`));
+mainRoutes.get(`/register`, (req, res) => res.render(`sing-up`));
+mainRoutes.get(`/login`, (req, res) => res.render(`sing-up`));
+mainRoutes.get(`/search`, (req, res) => res.render(`search`));
+mainRoutes.get(`/categories`, (req, res) => res.render(`all-categories`));
 
 module.exports = mainRoutes;
